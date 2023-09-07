@@ -1,6 +1,10 @@
 import Button from '../../ui/Button'
 
-function CheckoutButton({ bookingId }) {
+interface CheckoutButtonProps {
+  bookingId: string
+}
+
+function CheckoutButton({ bookingId }: CheckoutButtonProps) {
   return (
     <Button variation='primary' size='small'>
       Check out

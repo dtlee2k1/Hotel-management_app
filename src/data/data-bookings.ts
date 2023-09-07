@@ -1,12 +1,13 @@
 import { add } from 'date-fns'
+import Booking from '../types/booking.type'
 
-function fromToday(numDays, withTime = false) {
+function fromToday(numDays: number, withTime = false) {
   const date = add(new Date(), { days: numDays })
   if (!withTime) date.setUTCHours(0, 0, 0, 0)
   return date.toISOString().slice(0, -1)
 }
 
-export const bookings = [
+export const bookings: Booking[] = [
   // CABIN 001
   {
     created_at: fromToday(-20, true),

@@ -1,3 +1,4 @@
+import SettingsType from '../types/settings.type'
 import supabase from './supabase'
 
 export async function getSettings() {
@@ -7,11 +8,11 @@ export async function getSettings() {
     console.error(error)
     throw new Error('Settings could not be loaded')
   }
-  return data
+  return data as SettingsType
 }
 
 // We expect a newSetting object that looks like {setting: newValue}
-export async function updateSetting(newSetting) {
+export async function updateSetting(newSetting: Partial<SettingsType>) {
   const { data, error } = await supabase
     .from('settings')
     .update(newSetting)
@@ -23,5 +24,5 @@ export async function updateSetting(newSetting) {
     console.error(error)
     throw new Error('Settings could not be updated')
   }
-  return data
+  return data as SettingsType
 }
