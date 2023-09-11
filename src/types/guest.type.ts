@@ -6,4 +6,5 @@ export default interface GuestType {
   nationalID: string
   nationality: string
   countryFlag: string
+  country: string
 }

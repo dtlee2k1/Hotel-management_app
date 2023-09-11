@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 // Custom Hook persist data into local storage
 type UseLocalStorageStateReturnType<T> = [T, React.Dispatch<React.SetStateAction<T>>]
 
-export const useLocalStorageState = function <T>(
+export function useLocalStorageState<T>(
   initialState: T,
   key: string
 ): UseLocalStorageStateReturnType<T> {

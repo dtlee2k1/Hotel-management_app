@@ -1,7 +1,10 @@
 import styled from 'styled-components'
-import styledProps from '../types/styledProps.type'
 
-const Tag = styled.span<styledProps>`
+interface TagProps {
+  type: 'blue' | 'green' | 'silver'
+}
+
+const Tag = styled.span<TagProps>`
   width: fit-content;
   text-transform: uppercase;
   font-size: 1.1rem;

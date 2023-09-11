@@ -2,10 +2,10 @@ import styled from 'styled-components'
 import { format, isToday } from 'date-fns'
 
 import Tag from '../../ui/Tag'
-import Table from '../../ui/Table'
 
 import { formatCurrency } from '../../utils/helpers'
 import { formatDistanceFromNow } from '../../utils/helpers'
+import { BookingType } from '../../types/booking.type'
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -34,6 +34,10 @@ const Amount = styled.div`
   font-weight: 500;
 `
 
+interface BookingRowProps {
+  booking: BookingType
+}
+
 function BookingRow({
   booking: {
     id: bookingId,
@@ -47,15 +51,18 @@ function BookingRow({
     guests: { fullName: guestName, email },
     cabins: { name: cabinName }
   }
-}) {
+}: BookingRowProps) {
   const statusToTagName = {
     unconfirmed: 'blue',
     'checked-in': 'green',
     'checked-out': 'silver'
-  }
+  } as const
 
   return (
-    <Table.Row>
+    // <Table.Row>
+    // </Table.Row>
+
+    <>
       <Cabin>{cabinName}</Cabin>
 
       <Stacked>
@@ -77,7 +84,7 @@ function BookingRow({
       <Tag type={statusToTagName[status]}>{status.replace('-', ' ')}</Tag>
 
       <Amount>{formatCurrency(totalPrice)}</Amount>
-    </Table.Row>
+    </>
   )
 }
 

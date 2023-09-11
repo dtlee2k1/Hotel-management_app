@@ -13,11 +13,11 @@ import FormRow from '../../ui/FormRow'
 
 interface CreateCabinFormProps {
   cabinToEdit?: CabinType
-  setShowForm: (show: boolean) => void
+  onCloseModal?: () => void
 }
 
 function CreateCabinForm(props: CreateCabinFormProps) {
-  const { cabinToEdit = {}, setShowForm } = props
+  const { cabinToEdit = {}, onCloseModal } = props
   const { id: editId, ...editValues } = cabinToEdit as CabinType
   const isEditSession = Boolean(editId)
 
@@ -47,14 +47,19 @@ function CreateCabinForm(props: CreateCabinFormProps) {
           id: editId as string
         },
         {
-          onSuccess: () => setShowForm(false)
+          onSuccess: () => {
+            onCloseModal && onCloseModal()
+          }
         }
       )
     else
       createCabinMutate(
         { ...data, image },
         {
-          onSuccess: () => reset()
+          onSuccess: () => {
+            reset()
+            onCloseModal && onCloseModal()
+          }
         }
       )
   }
@@ -62,7 +67,7 @@ function CreateCabinForm(props: CreateCabinFormProps) {
   const isWorking = isCreating || isUpdating
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form $item={onCloseModal ? 'modal' : 'regular'} onSubmit={handleSubmit(onSubmit)}>
       <FormRow id='name' label='Cabin name' error={errors.name?.message}>
         <Input
           type='text'
@@ -139,7 +144,7 @@ function CreateCabinForm(props: CreateCabinFormProps) {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button $variation='secondary' onClick={() => setShowForm(false)}>
+        <Button $variation='secondary' type='reset' onClick={onCloseModal}>
           Cancel
         </Button>
         <Button disabled={isWorking}>{isEditSession ? 'Update' : 'Add'}</Button>

@@ -17,7 +17,7 @@ function UpdateSettingsForm() {
   const handleUpdate = (e: React.FocusEvent<HTMLInputElement, Element>, field: string) => {
     const { value } = e.target
     if (!value || +value <= 0) return
-    updateSettingMutate({ [field]: value })
+    updateSettingMutate({ [field]: +value })
   }
 
   if (isLoading) return <Spinner />

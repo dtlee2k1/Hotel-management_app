@@ -1,7 +1,10 @@
 import { css, styled } from 'styled-components'
-import styledProps from '../types/styledProps.type'
 
-const Heading = styled.h1<Pick<styledProps, 'as'>>`
+interface HeadingProps {
+  as: string
+}
+
+const Heading = styled.h1<HeadingProps>`
   ${(props) =>
     props.as === 'h1' &&
     css`

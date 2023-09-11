@@ -8,7 +8,8 @@ import ButtonGroup from '../../ui/ButtonGroup'
 import Button from '../../ui/Button'
 import ButtonText from '../../ui/ButtonText'
 
-import { useMoveBack } from '../../hooks/useMoveBack'
+import { BookingType, StatusType } from '../../types/booking.type'
+import useMoveBack from '../../hooks/useMoveBack'
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -17,8 +18,8 @@ const HeadingGroup = styled.div`
 `
 
 function BookingDetail() {
-  const booking = {}
-  const status = 'checked-in'
+  const booking = {} as BookingType
+  const status: StatusType = 'checked-in'
 
   const moveBack = useMoveBack()
 
@@ -26,7 +27,7 @@ function BookingDetail() {
     unconfirmed: 'blue',
     'checked-in': 'green',
     'checked-out': 'silver'
-  }
+  } as const
 
   return (
     <>
@@ -41,7 +42,7 @@ function BookingDetail() {
       <BookingDataBox booking={booking} />
 
       <ButtonGroup>
-        <Button variation='secondary' onClick={moveBack}>
+        <Button $variation='secondary' onClick={moveBack}>
           Back
         </Button>
       </ButtonGroup>

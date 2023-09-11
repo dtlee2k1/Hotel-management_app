@@ -1,5 +1,8 @@
 import styled, { css } from 'styled-components'
-import styledProps from '../types/styledProps.type'
+
+interface FilterButtonProps {
+  active: string
+}
 
 const StyledFilter = styled.div`
   border: 1px solid var(--color-grey-100);
@@ -11,7 +14,7 @@ const StyledFilter = styled.div`
   gap: 0.4rem;
 `
 
-const FilterButton = styled.button<styledProps>`
+const FilterButton = styled.button<FilterButtonProps>`
   background-color: var(--color-grey-0);
   border: none;
 
