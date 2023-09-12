@@ -82,7 +82,9 @@ function Modal({ children }: ModalProps) {
 function Open({ opens: opensWindowName, children }: OpenProps) {
   const { open } = useContext(ModalContext) as ModalContextType
   // Set openName value for the modal
-  return cloneElement(children, { onClick: () => open(opensWindowName) })
+  return cloneElement(children, {
+    onClick: () => open(opensWindowName)
+  })
 }
 
 function Window({ children, name }: WindowProps) {

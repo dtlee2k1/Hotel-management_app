@@ -9,7 +9,6 @@ import CreateCabinForm from './CreateCabinForm'
 import ConfirmDelete from '../../ui/ConfirmDelete'
 import Modal from '../../ui/Modal'
 import Table from '../../ui/Table'
-import Menus from '../../ui/Menus'
 
 const Img = styled.img`
   display: block;

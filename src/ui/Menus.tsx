@@ -1,6 +1,5 @@
 import { createContext, useContext, useState, useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
-
 import { HiEllipsisVertical } from 'react-icons/hi2'
 import MenusContextType from '../types/menusContext.type'
 import styled from 'styled-components'
@@ -46,6 +45,8 @@ const StyledList = styled.ul<StyledListProps>`
 
   right: ${(props) => props.$position.x}px;
   top: ${(props) => props.$position.y}px;
+
+  z-index: 100;
 `
 
 const StyledButton = styled.button`
@@ -120,6 +121,7 @@ function Toggle({ id }: ToggleProps) {
   const { openId, open, close, calculatedPosition } = useContext(MenusContext) as MenusContextType
 
   useEffect(() => {
+    // handle close menu when scroll view
     function handleScroll() {
       if (openId) {
         close()
@@ -132,9 +134,10 @@ function Toggle({ id }: ToggleProps) {
   }, [openId, close])
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    // Calculated Position of `List` for each `Menu`
+    // prevent bubbling close event from `handleClickOutside`
+    e.stopPropagation()
+    // set position for menu popup
     const rect = (e.target as HTMLButtonElement).getBoundingClientRect()
-
     calculatedPosition({
       x: window.innerWidth - rect.width - rect.x,
       y: rect.y + rect.height + 8
@@ -155,17 +158,16 @@ function List({ id, children }: ListProps) {
   const { openId, close, position } = useContext(MenusContext) as MenusContextType
 
   const ref = useRef<HTMLUListElement | null>(null)
-
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         close()
       }
     }
-    document.addEventListener('click', handleClickOutside, true)
+    document.addEventListener('click', handleClickOutside)
 
     return () => {
-      document.removeEventListener('click', handleClickOutside, true)
+      document.removeEventListener('click', handleClickOutside)
     }
   }, [close])
 

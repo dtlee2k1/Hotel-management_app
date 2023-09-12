@@ -9,10 +9,10 @@ export function useOutSideClick(handler: () => void, listenCapturing: boolean = 
         handler()
       }
     }
-    document.addEventListener('click', handleClickOutside, listenCapturing)
+    document.addEventListener('click', handleClickOutside, true)
 
     return () => {
-      document.removeEventListener('click', handleClickOutside, listenCapturing)
+      document.removeEventListener('click', handleClickOutside, true)
     }
   }, [handler, listenCapturing])
 

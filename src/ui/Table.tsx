@@ -35,6 +35,8 @@ const StyledHeader = styled(CommonRow)`
 `
 
 const StyledRow = styled(CommonRow)`
+  position: relative;
+
   padding: 1.4rem 2.4rem;
 
   &:not(:last-child) {
@@ -44,8 +46,6 @@ const StyledRow = styled(CommonRow)`
 
 const StyledBody = styled.section`
   margin: 0.4rem 0;
-  max-height: 48dvh;
-  overflow: auto;
 `
 
 const Footer = styled.footer`
