@@ -1,5 +1,5 @@
 import { add } from 'date-fns'
-import Booking from '../types/booking.type'
+import { BookingType } from '../types/booking.type'
 
 function fromToday(numDays: number, withTime = false) {
   const date = add(new Date(), { days: numDays })
@@ -7,7 +7,17 @@ function fromToday(numDays: number, withTime = false) {
   return date.toISOString().slice(0, -1)
 }
 
-export const bookings: Booking[] = [
+type KeysNotIncluded =
+  | 'id'
+  | 'cabins'
+  | 'guests'
+  | 'numNights'
+  | 'cabinPrice'
+  | 'extrasPrice'
+  | 'totalPrice'
+  | 'status'
+
+export const bookings: Omit<BookingType, KeysNotIncluded>[] = [
   // CABIN 001
   {
     created_at: fromToday(-20, true),

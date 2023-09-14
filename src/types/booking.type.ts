@@ -3,21 +3,21 @@ import GuestType from './guest.type'
 
 export type StatusType = 'unconfirmed' | 'checked-in' | 'checked-out'
 export interface BookingType {
-  id: string | number
-  cabinId: string | number
-  guestId: string | number
-  created_at: Date
+  id: string
+  created_at: string
   startDate: string
   endDate: string
-  hasBreakfast: boolean
-  observations: string
-  isPaid: boolean
-  numGuests: number
   numNights: number
+  numGuests: number
   cabinPrice: number
   extrasPrice: number
   totalPrice: number
-  guests: GuestType
-  cabins: CabinType
   status: StatusType
+  hasBreakfast: boolean
+  isPaid: boolean
+  observations: string
+  cabinId: number
+  guestId: number
+  cabins: CabinType
+  guests: GuestType
 }

@@ -1,8 +1,11 @@
+import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2'
+import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
-import styledProps from '../types/styledProps.type'
+import { PAGE_SIZE } from '../utils/constants'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface PaginationButtonProps {
-  active: string
+  $active: string
 }
 
 const StyledPagination = styled.div`
@@ -23,13 +26,14 @@ const P = styled.p`
 
 const Buttons = styled.div`
   display: flex;
+  align-items: center;
   gap: 0.6rem;
 `
 
-const PaginationButton = styled.button<styledProps>`
+const PaginationButton = styled.button<PaginationButtonProps>`
   background-color: ${(props) =>
-    props.active ? ' var(--color-brand-600)' : 'var(--color-grey-50)'};
-  color: ${(props) => (props.active ? ' var(--color-brand-50)' : 'inherit')};
+    props.$active ? ' var(--color-brand-600)' : 'var(--color-grey-50)'};
+  color: ${(props) => (props.$active ? ' var(--color-brand-50)' : 'inherit')};
   border: none;
   border-radius: var(--border-radius-sm);
   font-weight: 500;
@@ -40,7 +44,7 @@ const PaginationButton = styled.button<styledProps>`
   justify-content: center;
   gap: 0.4rem;
   padding: 0.6rem 1.2rem;
-  transition: all 0.3s;
+  transition: all 0.15s;
 
   &:has(span:last-child) {
     padding-left: 0.4rem;
@@ -60,3 +64,51 @@ const PaginationButton = styled.button<styledProps>`
     color: var(--color-brand-50);
   }
 `
+
+interface PaginationProps {
+  count: number
+}
+
+export default function Pagination({ count }: PaginationProps) {
+  const pageCount = Math.ceil(count / PAGE_SIZE)
+
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const currPage = !searchParams.get('page') ? 1 : Number(searchParams.get('page'))
+
+  const nextPage = () => {
+    const next = currPage === pageCount ? currPage : currPage + 1
+    searchParams.set('page', String(next))
+    setSearchParams(searchParams)
+  }
+
+  const prevPage = () => {
+    const prev = currPage === 1 ? currPage : currPage - 1
+    searchParams.set('page', String(prev))
+    setSearchParams(searchParams)
+  }
+
+  if (pageCount <= 1) return null
+
+  return (
+    <StyledPagination>
+      <P>
+        Showing <span> {(currPage - 1) * PAGE_SIZE + 1} </span> to
+        <span> {currPage === pageCount ? count : currPage * PAGE_SIZE} </span>
+        of
+        <span> {count} </span>results
+      </P>
+
+      <Buttons>
+        <PaginationButton $active='' onClick={prevPage} disabled={currPage === 1}>
+          <HiChevronLeft />
+          <span>Previous</span>
+        </PaginationButton>
+        <PaginationButton $active='' onClick={nextPage} disabled={currPage === pageCount}>
+          <span>Next</span>
+          <HiChevronRight />
+        </PaginationButton>
+      </Buttons>
+    </StyledPagination>
+  )
+}

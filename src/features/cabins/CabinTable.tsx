@@ -5,6 +5,7 @@ import Spinner from '../../ui/Spinner'
 import Table from '../../ui/Table'
 import Menus from '../../ui/Menus'
 import { useSearchParams } from 'react-router-dom'
+import Empty from '../../ui/Empty'
 
 export default function CabinTable() {
   // Fetch CabinsList using react query
@@ -52,6 +53,8 @@ export default function CabinTable() {
   })
 
   if (isLoading) return <Spinner />
+
+  if (!cabins) return <Empty resourceName='cabins' />
 
   return (
     // Boundary all `Table` into `Menus` to keep track which `Menu(Dup,Edit,Del)` in each `CabinRow` is opened at the time

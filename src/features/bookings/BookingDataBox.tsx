@@ -70,7 +70,7 @@ const Guest = styled.div`
 `
 
 interface PriceProps {
-  isPaid: boolean
+  $isPaid: boolean
 }
 
 const Price = styled.div<PriceProps>`
@@ -82,8 +82,8 @@ const Price = styled.div<PriceProps>`
   margin-top: 2.4rem;
 
   background-color: ${(props) =>
-    props.isPaid ? 'var(--color-green-100)' : 'var(--color-yellow-100)'};
-  color: ${(props) => (props.isPaid ? 'var(--color-green-700)' : 'var(--color-yellow-700)')};
+    props.$isPaid ? 'var(--color-green-100)' : 'var(--color-yellow-100)'};
+  color: ${(props) => (props.$isPaid ? 'var(--color-green-700)' : 'var(--color-yellow-700)')};
 
   & p:last-child {
     text-transform: uppercase;
@@ -123,7 +123,7 @@ function BookingDataBox({ booking }: BookingDataBoxProps) {
     hasBreakfast,
     observations,
     isPaid,
-    guests: { fullName: guestName, email, country, countryFlag, nationalID },
+    guests: { fullName: guestName, email, nationality, countryFlag, nationalID },
     cabins: { name: cabinName }
   } = booking
 
@@ -146,7 +146,7 @@ function BookingDataBox({ booking }: BookingDataBoxProps) {
 
       <Section>
         <Guest>
-          {countryFlag && <Flag src={countryFlag} alt={`Flag of ${country}`} />}
+          {countryFlag && <Flag src={countryFlag} alt={`Flag of ${nationality}`} />}
           <p>
             {guestName} {numGuests > 1 ? `+ ${numGuests - 1} guests` : ''}
           </p>
@@ -166,7 +166,7 @@ function BookingDataBox({ booking }: BookingDataBoxProps) {
           {hasBreakfast ? 'Yes' : 'No'}
         </DataItem>
 
-        <Price isPaid={isPaid}>
+        <Price $isPaid={isPaid}>
           <DataItem icon={<HiOutlineCurrencyDollar />} label={`Total price`}>
             {formatCurrency(totalPrice)}
 

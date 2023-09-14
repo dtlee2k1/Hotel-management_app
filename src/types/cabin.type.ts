@@ -1,5 +1,5 @@
 export default interface CabinType {
-  id?: string | number
+  id?: string
   name: string
   maxCapacity: number
   regularPrice: number

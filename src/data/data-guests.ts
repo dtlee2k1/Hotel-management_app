@@ -2,14 +2,14 @@
 
 import Guest from '../types/guest.type'
 
-export const guests: Guest[] = [
+export const guests: Omit<Guest, 'id'>[] = [
   {
     // id: 1000,
-    fullName: 'Jonas Schmedtmann',
-    email: 'hello@jonas.io',
-    nationality: 'Portugal',
+    fullName: 'Duc Thai Lee',
+    email: 'hello@test.io',
+    nationality: 'Vietnam',
     nationalID: '3525436345',
-    countryFlag: 'https://flagcdn.com/pt.svg'
+    countryFlag: 'https://flagcdn.com/vn.svg'
   },
   {
     fullName: 'Jonathan Smith',
@@ -26,14 +26,14 @@ export const guests: Guest[] = [
     countryFlag: 'https://flagcdn.com/fi.svg'
   },
   {
-    fullName: 'Jonas Mueller',
-    email: 'jonas@example.eu',
+    fullName: 'Tony Mueller',
+    email: 'tony@example.eu',
     nationality: 'Germany',
     nationalID: '1233212288',
     countryFlag: 'https://flagcdn.com/de.svg'
   },
   {
-    fullName: 'Jonas Anderson',
+    fullName: 'Tony Anderson',
     email: 'anderson@example.com',
     nationality: 'Bolivia (Plurinational State of)',
     nationalID: '0988520146',

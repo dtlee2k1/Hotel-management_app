@@ -1,9 +1,9 @@
 interface EmptyProps {
-  resource: string
+  resourceName: string
 }
 
-function Empty({ resource }: EmptyProps) {
-  return <p>No {resource} could be found.</p>
+function Empty({ resourceName }: EmptyProps) {
+  return <p>No {resourceName} could be found.</p>
 }
 
 export default Empty

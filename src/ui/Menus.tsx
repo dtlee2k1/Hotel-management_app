@@ -73,9 +73,6 @@ const StyledButton = styled.button`
     transition: all 0.3s;
   }
 `
-interface MenusProps {
-  children: React.ReactNode
-}
 
 interface MenusProps {
   children: React.ReactNode
