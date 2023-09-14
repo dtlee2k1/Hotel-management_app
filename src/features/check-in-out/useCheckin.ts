@@ -5,23 +5,30 @@ import { updateBooking } from '../../services/apiBookings'
 import { BookingType } from '../../types/booking.type'
 import { useNavigate } from 'react-router-dom'
 
-export default function useChecking() {
+export default function useCheckin() {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
 
   const { mutate: checkinMutate, isLoading: isCheckingIn } = useMutation({
-    mutationFn: (bookingId: string) =>
+    mutationFn: ({
+      bookingId,
+      breakfast
+    }: {
+      bookingId: string
+      breakfast: Partial<Pick<BookingType, 'hasBreakfast' | 'totalPrice' | 'extrasPrice'>>
+    }) =>
       updateBooking(bookingId, {
         status: 'checked-in',
-        isPaid: true
+        isPaid: true,
+        ...breakfast
       }),
     onSuccess: (data: BookingType) => {
       toast.success(`Booking data #${data.id} successfully checked in`)
-      queryClient.invalidateQueries({ queryKey: ['bookings'] })
+      queryClient.invalidateQueries()
       navigate('/bookings')
     },
-    onError: (error) => {
-      toast.error((error as Error).message)
+    onError: () => {
+      toast.error('There was an error while checking in')
     }
   })
 

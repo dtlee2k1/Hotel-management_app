@@ -100,7 +100,12 @@ export async function getStaysTodayActivity() {
   return data
 }
 
-export async function updateBooking(id: string, obj: Pick<BookingType, 'status' | 'isPaid'>) {
+export async function updateBooking(
+  id: string,
+  obj:
+    | Pick<BookingType, 'status' | 'isPaid'>
+    | Partial<Pick<BookingType, 'hasBreakfast' | 'totalPrice' | 'extrasPrice'>>
+) {
   const { data, error } = await supabase.from('bookings').update(obj).eq('id', id).select().single()
 
   if (error) {

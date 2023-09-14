@@ -2,10 +2,7 @@ import CabinType from '../types/cabin.type'
 import supabase, { supabaseUrl } from './supabase'
 
 export async function getCabins() {
-  let { data, error } = await supabase
-    .from('cabins')
-    .select('*')
-    .order('created_at', { ascending: true })
+  let { data, error } = await supabase.from('cabins').select('*').order('id', { ascending: true })
 
   if (error) {
     throw new Error('Cabins could not be loaded')
@@ -74,6 +71,7 @@ export async function updateCabin(currCabin: CabinType, id: string) {
     .update({ ...currCabin, image: imagePath })
     .eq('id', id)
     .select()
+    .order('id', { ascending: true })
 
   if (error) {
     throw new Error('Cabin could not be updated')
