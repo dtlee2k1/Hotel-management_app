@@ -68,37 +68,39 @@ export default function CabinRow({ cabin }: CabinRowProps) {
       <Price>{formatCurrency(regularPrice)}</Price>
       {discount ? <Discount>{formatCurrency(discount)}</Discount> : <span>&mdash;</span>}
 
-      <Modal>
-        <Menus.Menu>
-          <Menus.Toggle id={cabinId as string} />
+      <div>
+        <Modal>
+          <Menus.Menu>
+            <Menus.Toggle id={cabinId as string} />
 
-          <Menus.List id={cabinId as string}>
-            <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
-              Duplicate
-            </Menus.Button>
+            <Menus.List id={cabinId as string}>
+              <Menus.Button icon={<HiSquare2Stack />} onClick={handleDuplicate}>
+                Duplicate
+              </Menus.Button>
 
-            <Modal.Open opens='edit'>
-              <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
-            </Modal.Open>
+              <Modal.Open opens='edit'>
+                <Menus.Button icon={<HiPencil />}>Edit</Menus.Button>
+              </Modal.Open>
 
-            <Modal.Open opens='delete'>
-              <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
-            </Modal.Open>
-          </Menus.List>
-        </Menus.Menu>
+              <Modal.Open opens='delete'>
+                <Menus.Button icon={<HiTrash />}>Delete</Menus.Button>
+              </Modal.Open>
+            </Menus.List>
+          </Menus.Menu>
 
-        <Modal.Window name='edit'>
-          <CreateCabinForm cabinToEdit={cabin} />
-        </Modal.Window>
+          <Modal.Window name='edit'>
+            <CreateCabinForm cabinToEdit={cabin} />
+          </Modal.Window>
 
-        <Modal.Window name='delete'>
-          <ConfirmDelete
-            resourceName={`cabin`}
-            onConfirm={() => deleteCabinMutate(cabinId as string)}
-            disabled={isDeleting}
-          />
-        </Modal.Window>
-      </Modal>
+          <Modal.Window name='delete'>
+            <ConfirmDelete
+              resourceName={`cabin`}
+              onConfirm={() => deleteCabinMutate(cabinId as string)}
+              disabled={isDeleting}
+            />
+          </Modal.Window>
+        </Modal>
+      </div>
     </Table.Row>
   )
 }
