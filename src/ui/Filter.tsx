@@ -58,10 +58,8 @@ export default function Filter({ filterField, options, searchParamsToReset }: Fi
   const handleClick = (value: string) => {
     searchParams.set(filterField, value)
 
-    // Option to RESET all `searchParams` not needed when switching between `filterField`
-    if (searchParamsToReset) {
-      searchParamsToReset.map((params) => searchParams.set(params.key, String(params.value)))
-    }
+    if (searchParams.get('page')) searchParams.set('page', '1')
+
     setSearchParams(searchParams)
   }
 
