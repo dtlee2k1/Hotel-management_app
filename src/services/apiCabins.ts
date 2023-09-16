@@ -1,13 +1,27 @@
 import CabinType from '../types/cabin.type'
+import { PAGE_SIZE } from '../utils/constants'
 import supabase, { supabaseUrl } from './supabase'
 
-export async function getCabins() {
-  let { data, error } = await supabase.from('cabins').select('*').order('id', { ascending: true })
+export async function getCabins(page: number) {
+  let query = supabase
+    .from('cabins')
+    .select('*', { count: 'exact' })
+    .order('id', { ascending: true })
+
+  if (page) {
+    const from = (page - 1) * PAGE_SIZE
+    const to = from + PAGE_SIZE - 1
+
+    query = query.range(from, to)
+  }
+
+  let { data, count, error } = await query
 
   if (error) {
     throw new Error('Cabins could not be loaded')
   }
-  return data as CabinType[]
+
+  return { data: data as CabinType[], count: count }
 }
 
 export async function createCabin(newCabin: CabinType) {

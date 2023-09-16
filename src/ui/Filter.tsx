@@ -43,13 +43,9 @@ const FilterButton = styled.button<FilterButtonProps>`
 interface FilterProps {
   filterField: string
   options: Option[]
-  searchParamsToReset?: {
-    key: string
-    value: number
-  }[]
 }
 
-export default function Filter({ filterField, options, searchParamsToReset }: FilterProps) {
+export default function Filter({ filterField, options }: FilterProps) {
   const [searchParams, setSearchParams] = useSearchParams()
 
   // get active value
@@ -57,11 +53,7 @@ export default function Filter({ filterField, options, searchParamsToReset }: Fi
 
   const handleClick = (value: string) => {
     searchParams.set(filterField, value)
-
-    // Option to RESET all `searchParams` not needed when switching between `filterField`
-    if (searchParamsToReset) {
-      searchParamsToReset.map((params) => searchParams.set(params.key, String(params.value)))
-    }
+    searchParams.set('page', '1')
     setSearchParams(searchParams)
   }
 

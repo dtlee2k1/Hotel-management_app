@@ -26,10 +26,10 @@ export default function useBookings() {
   })
 
   const bookings = data?.data || []
-  const count = data?.count || null
+  const count = data?.count || 0
 
   // PRE-FETCHING
-  const pageCount = Math.ceil((count as number) / PAGE_SIZE)
+  const pageCount = Math.ceil(count / PAGE_SIZE)
   if (page < pageCount)
     queryClient.prefetchQuery({
       queryKey: ['bookings', filter, sortBy, page + 1],

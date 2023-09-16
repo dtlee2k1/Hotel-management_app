@@ -6,10 +6,11 @@ import Table from '../../ui/Table'
 import Menus from '../../ui/Menus'
 import { useSearchParams } from 'react-router-dom'
 import Empty from '../../ui/Empty'
+import Pagination from '../../ui/Pagination'
 
 export default function CabinTable() {
   // Fetch CabinsList using react query
-  const { cabins, isLoading } = useCabins()
+  const { cabins, count, isLoading } = useCabins()
   // Get searchParams from URL for FILTER/SORT feature
   const [searchParams] = useSearchParams()
 
@@ -19,11 +20,11 @@ export default function CabinTable() {
   let filteredCabins: CabinType[] = []
 
   // Filter Cabins list by key value `discount`
-  if (filteredValue === 'all') filteredCabins = cabins || []
+  if (filteredValue === 'all') filteredCabins = cabins
   if (filteredValue === 'no-discount')
-    filteredCabins = cabins?.filter((cabin) => cabin.discount === 0) || []
+    filteredCabins = cabins?.filter((cabin) => cabin.discount === 0)
   if (filteredValue === 'with-discount')
-    filteredCabins = cabins?.filter((cabin) => cabin.discount > 0) || []
+    filteredCabins = cabins?.filter((cabin) => cabin.discount > 0)
 
   // 2) SORT
   const SortBy = searchParams.get('sortBy') || 'startDate-asc'
@@ -72,6 +73,9 @@ export default function CabinTable() {
           data={sortedCabins}
           render={(cabin: CabinType) => <CabinRow key={cabin.id} cabin={cabin} />}
         />
+        <Table.Footer>
+          <Pagination count={count} />
+        </Table.Footer>
       </Table>
     </Menus>
   )

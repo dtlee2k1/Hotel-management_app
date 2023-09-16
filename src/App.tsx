@@ -4,7 +4,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Toaster } from 'react-hot-toast'
 
 import GlobalStyles from './styles/GlobalStyles'
-import AppLayout from './ui/AppLayout'
 import Dashboard from './pages/Dashboard'
 import Bookings from './pages/Bookings'
 import Cabins from './pages/Cabins'
@@ -15,6 +14,9 @@ import Login from './pages/Login'
 import PageNotFound from './pages/PageNotFound'
 import Booking from './pages/Booking'
 import Checkin from './pages/Checkin'
+
+import AppLayout from './ui/AppLayout'
+import ProtectedRoute from './ui/ProtectedRoute'
 
 export default function App() {
   const queryClient = new QueryClient({
@@ -30,7 +32,13 @@ export default function App() {
       <GlobalStyles />
       <BrowserRouter>
         <Routes>
-          <Route element={<AppLayout />}>
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Navigate replace to='dashboard' />} />
             <Route path='dashboard' element={<Dashboard />} />
             <Route path='bookings' element={<Bookings />} />
