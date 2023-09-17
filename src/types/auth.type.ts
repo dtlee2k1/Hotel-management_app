@@ -1,11 +1,11 @@
-export interface User {
+export interface UserAuth {
   fullName: string
   email: string
   password: string
 }
 
-export type EmailAuth = Pick<User, 'email' | 'password'>
+export type EmailAuth = Pick<UserAuth, 'email' | 'password'>
 
-export interface ISignupForm extends User {
+export interface ISignupForm extends UserAuth {
   passwordConfirm: string
 }
