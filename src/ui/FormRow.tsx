@@ -40,7 +40,6 @@ interface FormRowProps {
   id?: string
   label?: string
   error?: string
-  orientation?: 'vertical'
   children: React.ReactNode
 }
 

@@ -1,7 +1,7 @@
-import { Auth } from '../types/auth.type'
+import { EmailAuth } from '../types/auth.type'
 import supabase from './supabase'
 
-export async function login({ email, password }: Auth) {
+export async function login({ email, password }: EmailAuth) {
   let { data, error } = await supabase.auth.signInWithPassword({
     email,
     password

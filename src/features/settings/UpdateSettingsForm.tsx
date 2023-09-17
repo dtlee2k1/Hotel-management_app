@@ -1,10 +1,10 @@
 import useSettings from './useSettings'
 import useUpdateSetting from './useUpdateSetting'
 
-import Form from '../../ui/Form'
 import FormRow from '../../ui/FormRow'
 import Input from '../../ui/Input'
 import Spinner from '../../ui/Spinner'
+import Form from '../../ui/Form'
 
 function UpdateSettingsForm() {
   const {
@@ -23,7 +23,7 @@ function UpdateSettingsForm() {
   if (isLoading) return <Spinner />
 
   return (
-    <Form>
+    <Form $item='regular'>
       <FormRow label='Minimum nights/booking' id='min-nights'>
         <Input
           type='number'
