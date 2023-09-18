@@ -20,7 +20,12 @@ function SignupForm() {
   } = useForm<ISignupForm>()
 
   const onSubmit = ({ fullName, email, password }: UserAuth) => {
-    signUpMutate({ fullName, email, password })
+    signUpMutate(
+      { fullName, email, password },
+      {
+        onSuccess: () => reset()
+      }
+    )
   }
 
   return (
@@ -78,7 +83,7 @@ function SignupForm() {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button disabled={isLoading} $variation='secondary' type='reset'>
+        <Button disabled={isLoading} onClick={() => reset()} $variation='secondary' type='reset'>
           Cancel
         </Button>
         <Button disabled={isLoading}>Create new user</Button>

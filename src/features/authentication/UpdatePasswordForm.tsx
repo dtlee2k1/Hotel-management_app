@@ -1,23 +1,29 @@
 import { useForm } from 'react-hook-form'
 import Button from '../../ui/Button'
-import Form from '../../ui/Form'
 import FormRow from '../../ui/FormRow'
 import Input from '../../ui/Input'
 
 import { useUpdateUser } from './useUpdateUser'
+import { ISignupForm, UserAuth } from '../../types/auth.type'
+import Form from '../../ui/Form'
 
 function UpdatePasswordForm() {
-  const { register, handleSubmit, formState, getValues, reset } = useForm()
-  const { errors } = formState
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+    reset
+  } = useForm<ISignupForm>()
 
-  const { updateUser, isUpdating } = useUpdateUser()
+  const { updateUserMutate, isUpdating } = useUpdateUser()
 
-  function onSubmit({ password }) {
-    updateUser({ password }, { onSuccess: reset })
+  function onSubmit({ password }: Partial<UserAuth>) {
+    updateUserMutate({ password }, { onSuccess: () => reset() })
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form $item='regular' onSubmit={handleSubmit(onSubmit)}>
       <FormRow label='Password (min 8 characters)' error={errors?.password?.message}>
         <Input
           type='password'
@@ -42,12 +48,12 @@ function UpdatePasswordForm() {
           disabled={isUpdating}
           {...register('passwordConfirm', {
             required: 'This field is required',
-            validate: (value) => getValues().password === value || 'Passwords need to match'
+            validate: (value) => getValues().password === value || 'Passwords are not matching'
           })}
         />
       </FormRow>
       <FormRow>
-        <Button onClick={reset} type='reset' variation='secondary'>
+        <Button onClick={() => reset()} type='reset' $variation='secondary'>
           Cancel
         </Button>
         <Button disabled={isUpdating}>Update password</Button>
