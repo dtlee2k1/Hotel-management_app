@@ -1,5 +1,6 @@
 import { BookingType } from '../types/booking.type'
 import { Filter, SortBy } from '../types/field.type'
+import GuestType from '../types/guest.type'
 import { PAGE_SIZE } from '../utils/constants'
 import { getToday } from '../utils/helpers'
 import supabase from './supabase'
@@ -50,6 +51,7 @@ export async function getBooking(id: string) {
 }
 
 // Returns all BOOKINGS that are were created after the given date. Useful to get bookings created in the last 30 days, for example.
+// date: ISO String
 export async function getBookingsAfterDate(date: string) {
   const { data, error } = await supabase
     .from('bookings')
@@ -61,7 +63,7 @@ export async function getBookingsAfterDate(date: string) {
     throw new Error('Bookings could not get loaded')
   }
 
-  return data
+  return data as Pick<BookingType, 'created_at' | 'totalPrice' | 'extrasPrice'>[]
 }
 
 // Returns all STAYS that are were created after the given date
@@ -77,7 +79,7 @@ export async function getStaysAfterDate(date: string) {
     throw new Error('Bookings could not get loaded')
   }
 
-  return data
+  return data as BookingType[]
 }
 
 // Activity means that there is a check in or a check out today

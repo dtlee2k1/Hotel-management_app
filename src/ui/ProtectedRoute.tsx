@@ -19,7 +19,7 @@ interface ProtectedRouteProps {
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const navigate = useNavigate()
   // 1. Load the Authenticated user
-  const { user, isLoading, isAuthenticated } = useUser()
+  const { isLoading, isAuthenticated } = useUser()
   // 2. If there is no authenticated user, redirect to the login page
   useEffect(() => {
     if (!isAuthenticated && !isLoading) navigate('/login')
