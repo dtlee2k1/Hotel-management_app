@@ -1,3 +1,4 @@
+import { ActivityType } from '../types/activity.type'
 import { BookingType } from '../types/booking.type'
 import { Filter, SortBy } from '../types/field.type'
 import { PAGE_SIZE } from '../utils/constants'
@@ -69,7 +70,6 @@ export async function getBookingsAfterDate(date: string) {
 export async function getStaysAfterDate(date: string) {
   const { data, error } = await supabase
     .from('bookings')
-    // .select('*')
     .select('*, guests(fullName)')
     .gte('startDate', date)
     .lte('startDate', getToday())
@@ -98,7 +98,7 @@ export async function getStaysTodayActivity() {
   if (error) {
     throw new Error('Bookings could not get loaded')
   }
-  return data
+  return data as ActivityType[]
 }
 
 export async function updateBooking(
