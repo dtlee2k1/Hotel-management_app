@@ -7,6 +7,7 @@ import { useBooking } from './useBooking'
 import useDeleteBooking from './useDeleteBooking'
 import useCheckout from '../check-in-out/useCheckout'
 
+import BookingDataBox from './BookingDataBox'
 import Row from '../../ui/Row'
 import Heading from '../../ui/Heading'
 import Tag from '../../ui/Tag'
@@ -15,8 +16,8 @@ import Button from '../../ui/Button'
 import ButtonText from '../../ui/ButtonText'
 import Spinner from '../../ui/Spinner'
 import Modal from '../../ui/Modal'
+import Empty from '../../ui/Empty'
 import ConfirmDelete from '../../ui/ConfirmDelete'
-import BookingDataBox from './BookingDataBox'
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -32,6 +33,7 @@ function BookingDetail() {
   const { deleteBookingMutate, isDeleting } = useDeleteBooking()
 
   if (isLoading) return <Spinner />
+  if (!booking) return <Empty resourceName='booking' />
 
   const { id: bookingId, status } = booking as BookingType
 
