@@ -22,6 +22,7 @@ export const getToday = function (options: { end?: boolean } = {}) {
     // Set to the last second of the day
     today.setUTCHours(23, 59, 59, 999)
   else today.setUTCHours(0, 0, 0, 0)
+
   return today.toISOString()
 }
 

@@ -48,9 +48,9 @@ const Value = styled.p`
 `
 
 interface StatProps {
-  icon: string
+  icon: JSX.Element
   title: string
-  value: string
+  value: number | string
   color: string
 }
 

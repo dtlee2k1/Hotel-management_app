@@ -129,7 +129,8 @@ function Uploader() {
         textAlign: 'center',
         display: 'flex',
         flexDirection: 'column',
-        gap: '8px'
+        gap: '8px',
+        color: '#374151'
       }}
     >
       <h3>SAMPLE DATA</h3>

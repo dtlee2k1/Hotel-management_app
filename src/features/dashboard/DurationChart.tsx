@@ -1,4 +1,9 @@
 import styled from 'styled-components'
+import { BookingType } from '../../types/booking.type'
+import { StartDataType } from '../../types/startData.type'
+import Heading from '../../ui/Heading'
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
+import { useDarkMode } from '../../hooks/useDarkMode'
 
 const ChartBox = styled.div`
   /* Box */
@@ -18,7 +23,7 @@ const ChartBox = styled.div`
   }
 `
 
-const startDataLight = [
+const startDataLight: StartDataType[] = [
   {
     duration: '1 night',
     value: 0,
@@ -61,7 +66,7 @@ const startDataLight = [
   }
 ]
 
-const startDataDark = [
+const startDataDark: StartDataType[] = [
   {
     duration: '1 night',
     value: 0,
@@ -104,16 +109,14 @@ const startDataDark = [
   }
 ]
 
-function prepareData(startData, stays) {
-  // A bit ugly code, but sometimes this is what it takes when working with real data 😅
+function incArrayValue(arr: StartDataType[], field: string) {
+  return arr.map((obj) => (obj.duration === field ? { ...obj, value: obj.value + 1 } : obj))
+}
 
-  function incArrayValue(arr, field) {
-    return arr.map((obj) => (obj.duration === field ? { ...obj, value: obj.value + 1 } : obj))
-  }
-
+function prepareData(startData: StartDataType[], stays: BookingType[]) {
   const data = stays
-    .reduce((arr, cur) => {
-      const num = cur.numNights
+    .reduce((arr, stay) => {
+      const num = stay.numNights
       if (num === 1) return incArrayValue(arr, '1 night')
       if (num === 2) return incArrayValue(arr, '2 nights')
       if (num === 3) return incArrayValue(arr, '3 nights')
@@ -121,10 +124,56 @@ function prepareData(startData, stays) {
       if ([6, 7].includes(num)) return incArrayValue(arr, '6-7 nights')
       if (num >= 8 && num <= 14) return incArrayValue(arr, '8-14 nights')
       if (num >= 15 && num <= 21) return incArrayValue(arr, '15-21 nights')
-      if (num >= 21) return incArrayValue(arr, '21+ nights')
+      if (num > 21) return incArrayValue(arr, '21+ nights')
       return arr
     }, startData)
     .filter((obj) => obj.value > 0)
 
   return data
 }
+
+interface DurationChartProps {
+  confirmedStays: BookingType[]
+}
+
+function DurationChart({ confirmedStays }: DurationChartProps) {
+  const { isDarkMode } = useDarkMode()
+
+  const startData = isDarkMode ? startDataDark : startDataLight
+  const data = prepareData(startData, confirmedStays)
+
+  return (
+    <ChartBox>
+      <Heading as='h2'>Stay duration summary</Heading>
+      <ResponsiveContainer width='100%' height={240}>
+        <PieChart>
+          <Tooltip />
+          <Pie
+            data={data}
+            dataKey='value'
+            nameKey='duration'
+            cx='40%'
+            cy='50%'
+            innerRadius={85}
+            outerRadius={110}
+            paddingAngle={3}
+          >
+            {data.map((entry) => (
+              <Cell key={entry.duration} fill={entry.color} stroke={entry.color} />
+            ))}
+          </Pie>
+          <Legend
+            verticalAlign='middle'
+            align='right'
+            wrapperStyle={{ width: '30%' }}
+            layout='vertical'
+            iconSize={15}
+            iconType='circle'
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </ChartBox>
+  )
+}
+
+export default DurationChart

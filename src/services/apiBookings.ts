@@ -1,6 +1,5 @@
 import { BookingType } from '../types/booking.type'
 import { Filter, SortBy } from '../types/field.type'
-import GuestType from '../types/guest.type'
 import { PAGE_SIZE } from '../utils/constants'
 import { getToday } from '../utils/helpers'
 import supabase from './supabase'
