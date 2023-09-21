@@ -4,20 +4,18 @@ import supabase from '../services/supabase'
 import Button from '../ui/Button'
 import { subtractDates } from '../utils/helpers'
 
-import SettingsType from '../types/settings.type'
-
 import { bookings } from './data-bookings'
 import { cabins } from './data-cabins'
 import { guests } from './data-guests'
 import GuestType from '../types/guest.type'
 import CabinType from '../types/cabin.type'
 
-const originalSettings: SettingsType = {
-  minBookingLength: 3,
-  maxBookingLength: 30,
-  maxGuestsPerBooking: 10,
-  breakfastPrice: 15
-}
+// const originalSettings: SettingsType = {
+//   minBookingLength: 3,
+//   maxBookingLength: 30,
+//   maxGuestsPerBooking: 10,
+//   breakfastPrice: 15
+// }
 
 async function deleteGuests() {
   const { error } = await supabase.from('guests').delete().gt('id', 0)

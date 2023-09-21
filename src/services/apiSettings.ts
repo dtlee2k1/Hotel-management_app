@@ -1,4 +1,4 @@
-import SettingsType from '../types/settings.type'
+import { SettingsType } from '../types/settings.type'
 import supabase from './supabase'
 
 export async function getSettings() {
